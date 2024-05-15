@@ -3,21 +3,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, join_room
 
 app = Flask(__name__)
-sockerio = SocketIO(app)
+socketio = SocketIO(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///for_automats.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
 db = SQLAlchemy(app)
 
-class User(db.Model):
+class Rooms(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
 
     def __repr__(self):
         return '<User %r>' % self.username
-
-@app.route('/') #наш главный экран
-def index():
-    return render_template('index.html')
 
 lobby = "lobby"
 tables = {}
